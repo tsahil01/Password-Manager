@@ -6,9 +6,6 @@ Welcome to Password Manager! This application allows you to securely store your 
 
 The user interface for this application is built using [CustomTkinter](https://github.com/TomSchimansky/CustomTkinter), which is a library created by [Tom Schimansky](https://github.com/TomSchimansky). A big thanks to him for creating this awesome library!
 
-## 💻 How to use
-
-To use this application, you can either download the .exe file (for Windows users) or clone this repository and install the required packages using `pip install <package_name>`. Once the packages are installed, run the `main.py` file to start the application on any Windows, Linux or Mac OS.
 
 ## ⭐ Features
 
@@ -16,6 +13,10 @@ To use this application, you can either download the .exe file (for Windows user
 - Generate random, secure passwords consisting of letters, numbers, and special characters
 - Customize the length and complexity of the generated passwords
 - View and manage your saved passwords within the app
+
+## 💻 How to use
+
+To use this application, you can either download the .exe file (for Windows users) or clone this repository and install the required packages using `pip install <package_name>`. Once the packages are installed, run the `main.py` file to start the application on any Windows, Linux or Mac OS.
 
 ## 🚀 Latest updates
 
