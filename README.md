@@ -1,4 +1,4 @@
-![Password Manager logo](https://github.com/<username>/Password-Manager/images/logo.png)
+<!-- ![Password Manager logo](https://github.com/<username>/Password-Manager/images/logo.png) -->
 
 # 🔒 Password Manager
 
