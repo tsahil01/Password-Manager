@@ -8,22 +8,54 @@ import json
 
 # ---------------------------- SEARCH PASSWORD ------------------------------- #
 
+    
+    
+
+
 def search_pw():
-    website = entry_ws.get()
+    search_website = search_ws_name.get()
     try:
         with open("Password.json", "r") as file:
+            global data
+            data = json.load(file)
+
+    except FileNotFoundError:
+        messagebox.showinfo(title="Error", message="No Data File Found.")
+        # filenotfound()
+
+    else:
+
+        if search_website in list(data):
+            # deatails()     add pyperclip as well to copy the pw to clipboard
+
+            pw_found(w=search_website,e=f"{data[search_website]['email']}",p=f"{data[search_website]['password']}")
+        
+        else:
+            messagebox.showinfo(title=f"{search_website}", message=f"{search_website} Email and Password is not saved here.")
+
+            
+            # no_deatils()
+
+
+def all_pw():
+    try:
+        with open("Password.json", "r") as file:
+            global data
             data = json.load(file)
 
     except FileNotFoundError:
         messagebox.showinfo(title="Error", message="No Data File Found.")
 
     else:
-
-        if website in list(data):
-            messagebox.showinfo(title=f"{website}",
-                                message=f"Email: {data[website]['email']}\n\nPassword: {data[website]['password']}")
-        else:
-            messagebox.showinfo(title=f"{website}", message=f"{website} Email and Password is not saved here.")
+        r_grid = 3
+        for w in list(data):
+            e = data[w]['email']
+            p = data[w]['password']
+            customtkinter.CTkLabel(master=search_pw_tab, justify=tkinter.CENTER, text=f"{w}").grid(row=r_grid,column=0,pady=5) 
+            customtkinter.CTkLabel(master=search_pw_tab, justify=tkinter.CENTER, text= f"{e}").grid(row=r_grid,column=1,pady=5) 
+            customtkinter.CTkLabel(master=search_pw_tab, justify=tkinter.CENTER, text= f"{p}").grid(row=r_grid,column=2,pady=5)
+            r_grid+=1
+        
 
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
@@ -93,7 +125,7 @@ customtkinter.set_appearance_mode("dark")  # Modes: "System" (standard), "Dark",
 customtkinter.set_default_color_theme("blue")  # Themes: "blue" (standard), "green", "dark-blue"
 
 app = customtkinter.CTk()
-app.geometry("800x750")
+app.geometry("850x750")
 app.title("PASSWORD MANAGER")
 
 def change_appearance_mode_event(new_appearance_mode: str):
@@ -153,11 +185,11 @@ save_pw_btn.grid(row=3,column=2,pady=10, padx=10)
 fotter_frame = customtkinter.CTkFrame(master=app,corner_radius=30)
 fotter_frame.pack(pady=20, padx=40, fill="both", expand=False)
 
-appearance_mode_label = customtkinter.CTkLabel(fotter_frame, text="Appearance Mode:", anchor="w")
-appearance_mode_label.grid(row=0,column=0,padx=20, pady=(10, 0))
+appearance_mode_label = customtkinter.CTkLabel(fotter_frame, text="Appearance Mode:", anchor="w").grid(row=0,column=0,padx=20, pady=(10, 0))
+
 appearance_mode_optionemenu = customtkinter.CTkOptionMenu(fotter_frame, values=["System", "Dark", "Light"],command=change_appearance_mode_event)
-appearance_mode_optionemenu.set("System")
 appearance_mode_optionemenu.grid(row=1,column=0,padx=20, pady=(10, 10))
+appearance_mode_optionemenu.set("System")
 
 scaling_label = customtkinter.CTkLabel(fotter_frame, text="UI Scaling:", anchor="w")
 scaling_label.grid(row=0, column=1, padx=20, pady=(10, 0))
@@ -165,9 +197,30 @@ scaling_optionemenu = customtkinter.CTkOptionMenu(fotter_frame, values=["80%", "
 scaling_optionemenu.set("100%")
 scaling_optionemenu.grid(row=1, column=1, padx=20, pady=(10, 20))
 
-
-
 #search_pw_tab -->
+search_ws_name = customtkinter.CTkEntry(master=search_pw_tab, placeholder_text="Enter Website Name", width=300, justify=tkinter.CENTER,corner_radius=20)
+search_ws_name.grid(row=0,column=1,pady=5, padx=5)
+
+search_pw_btn= customtkinter.CTkButton(master=search_pw_tab,text="Search Password", command=search_pw,corner_radius=10)
+search_pw_btn.grid(row=0,column=2,pady=5, padx=5)
+
+all_pw_pw_btn= customtkinter.CTkButton(master=search_pw_tab,text="Show all Password", command=all_pw,corner_radius=10).grid(row=1,column=1,pady=5, padx=5)
+
+label_ws_all = customtkinter.CTkLabel(master=search_pw_tab, justify=tkinter.CENTER, text="Website").grid(row=2,column=0,pady=10, padx=50)
+
+label_email_all = customtkinter.CTkLabel(master=search_pw_tab, justify=tkinter.CENTER, text="Email/Username").grid(row=2,column=1,pady=10, padx=50)
+
+label_pw_all = customtkinter.CTkLabel(master=search_pw_tab, justify=tkinter.CENTER, text="Passowrd").grid(row=2,column=2,pady=10, padx=50)
+
+
+
+def pw_found(w,e,p):
+            customtkinter.CTkLabel(master=search_pw_tab, justify=tkinter.CENTER, text=w).grid(row=3,column=0,pady=5) 
+            customtkinter.CTkLabel(master=search_pw_tab, justify=tkinter.CENTER, text= e).grid(row=3,column=1,pady=5) 
+            customtkinter.CTkLabel(master=search_pw_tab, justify=tkinter.CENTER, text= p).grid(row=3,column=2,pady=5)
+
+ 
+
 
 app.mainloop()
 
