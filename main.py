@@ -9,7 +9,7 @@ import json
 # ---------------------------- SEARCH PASSWORD ------------------------------- #
 
 def search_pw():
-    website = label_ws_name.get()
+    website = entry_ws.get()
     try:
         with open("Password.json", "r") as file:
             data = json.load(file)
@@ -30,7 +30,7 @@ def search_pw():
 
 # Password Generator Project
 def pw_gen():
-    label_pw_name.delete(0, tkinter.END)
+    entry_pw.delete(0, tkinter.END)
     letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
                'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
                'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
@@ -45,16 +45,16 @@ def pw_gen():
     shuffle(password_list)
 
     password_gen = "".join(password_list)
-    label_pw_name.insert(0, password_gen)
+    entry_pw.insert(0, password_gen)
     pyperclip.copy(password_gen)
 
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 
 def save_pass():
-    website = label_ws_name.get()
-    email = label_email_name.get()
-    password = label_pw_name.get()
+    website = entry_ws.get()
+    email = entry_email.get()
+    password = entry_pw.get()
     new_data = {
         website: {
             "email": email,
@@ -81,10 +81,10 @@ def save_pass():
                 # Saving updated data
                 json.dump(data, file, indent=4)
         finally:
-            label_ws_name.delete(0, tkinter.END)
-            label_pw_name.delete(0, tkinter.END)
-            label_email_name.delete(0, tkinter.END)
-            label_ws_name.focus()
+            entry_ws.delete(0, tkinter.END)
+            entry_pw.delete(0, tkinter.END)
+            entry_email.delete(0, tkinter.END)
+            entry_ws.focus()
 
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -114,8 +114,7 @@ main_frame = customtkinter.CTkFrame(master=app,corner_radius=30)
 main_frame.pack(pady=20, padx=40, fill="both", expand=False)
 
 #Adding tabs --->
-tabview = customtkinter.CTkTabview(main_frame,width=600)
-# tabview.configure()
+tabview = customtkinter.CTkTabview(main_frame,width=600,corner_radius=20)
 tabview.pack(padx=5, pady=20)
 add_pw_tab = tabview.add("Add Password")
 search_pw_tab = tabview.add("Search Password")
@@ -124,14 +123,25 @@ tabview.set("Add Password")
 
 #add_pw_tab -->
 
-label_ws_name = customtkinter.CTkEntry(master=add_pw_tab, placeholder_text="Enter Website Name", width=250, justify=tkinter.CENTER)
-label_ws_name.grid(row=0,column=1,pady=10, padx=10)
+# Labels -->
+label_ws = customtkinter.CTkLabel(master=add_pw_tab, justify=tkinter.LEFT, text="Website:")
+label_ws.grid(row=0,column=0)
 
-label_email_name = customtkinter.CTkEntry(master=add_pw_tab, placeholder_text="Enter your email", width=250, justify=tkinter.CENTER)
-label_email_name.grid(row=1,column=1,pady=10, padx=10)
+label_ws = customtkinter.CTkLabel(master=add_pw_tab, justify=tkinter.LEFT, text="Email/Username:")
+label_ws.grid(row=1,column=0)
 
-label_pw_name = customtkinter.CTkEntry(master=add_pw_tab, placeholder_text="Enter your Password", width=250, justify=tkinter.CENTER)
-label_pw_name.grid(row=2,column=1,pady=10, padx=10)
+label_ws = customtkinter.CTkLabel(master=add_pw_tab, justify=tkinter.LEFT, text="Password:")
+label_ws.grid(row=2,column=0)
+
+
+entry_ws = customtkinter.CTkEntry(master=add_pw_tab, placeholder_text="Enter Website Name", width=250, justify=tkinter.CENTER,corner_radius=20)
+entry_ws.grid(row=0,column=1,pady=10, padx=10)
+
+entry_email = customtkinter.CTkEntry(master=add_pw_tab, placeholder_text="Enter your email", width=250, justify=tkinter.CENTER,corner_radius=20)
+entry_email.grid(row=1,column=1,pady=10, padx=10)
+
+entry_pw = customtkinter.CTkEntry(master=add_pw_tab, placeholder_text="Enter your Password", width=250, justify=tkinter.CENTER,corner_radius=20)
+entry_pw.grid(row=2,column=1,pady=10, padx=10)
 
 generate_pw_btn= customtkinter.CTkButton(master=add_pw_tab,text="Generate Password", command=pw_gen)
 generate_pw_btn.grid(row=3,column=0,pady=10, padx=10)
@@ -155,6 +165,9 @@ scaling_optionemenu = customtkinter.CTkOptionMenu(fotter_frame, values=["80%", "
 scaling_optionemenu.set("100%")
 scaling_optionemenu.grid(row=1, column=1, padx=20, pady=(10, 20))
 
+
+
+#search_pw_tab -->
 
 app.mainloop()
 
